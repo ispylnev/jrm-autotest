@@ -1,0 +1,74 @@
+plugins {
+    id 'java'
+    id "org.springframework.boot" version "2.0.5.RELEASE"
+    id "io.spring.dependency-management" version "1.0.6.RELEASE"
+//    id "io.spring.dependency-management" version "1.0.10.RELEASE"
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+ext{
+    lombokVersion = "1.18.8"
+    junitVersion = "5.4.1"
+    shazamcrestVersion = "0.11"
+    wiremockVersion = "2.21.0"
+    jacksonDataformatXmlVersion = "2.9.0"
+    postgresqlVersion = "42.2.3"
+    springVersion = "2.0.5.RELEASE"
+    restAssured = "3.0.0"
+}
+
+dependencies {
+
+    // Lombok
+    compileOnly "org.projectlombok:lombok:${lombokVersion}"
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+
+    // Spring
+    implementation("org.springframework.boot:spring-boot-starter-test:${springVersion}") {
+        exclude group: 'org.mockito'
+    }
+    implementation("org.springframework.boot:spring-boot-starter-test") {
+        exclude group: "junit", module: "junit"
+    }
+    compile "org.springframework.boot:spring-boot-starter-data-jpa:$springVersion"
+    compile "org.springframework.boot:spring-boot:$springVersion"
+
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    compile("org.springframework.boot:spring-boot-starter-security"){
+        exclude module: "logback-classic"
+    }
+
+    // Jackson
+    implementation "com.fasterxml.jackson.core:jackson-annotations"
+    implementation "com.fasterxml.jackson.core:jackson-core"
+    implementation "com.fasterxml.jackson.core:jackson-databind"
+    // XMl serializer
+    implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-xml:${jacksonDataformatXmlVersion}"
+
+    // Database support
+    implementation "org.postgresql:postgresql:${postgresqlVersion}"
+
+
+    implementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
+    implementation "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
+    implementation "org.junit.jupiter:junit-jupiter-params:${junitVersion}"
+
+    // Mocking jrm.service
+    implementation "com.github.tomakehurst:wiremock-standalone:${wiremockVersion}"
+
+    //rest assured
+    compile "io.rest-assured:rest-assured:${restAssured}"
+
+    test {
+        useJUnitPlatform()
+    }
+
+}
+
