@@ -1,6 +1,5 @@
 package jrm.task;
 
-import jrm.user.Module;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -11,6 +10,9 @@ import javax.persistence.*;
 import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
+
+@Entity
+@Table(name = "task")
 
 @Data
 @NoArgsConstructor

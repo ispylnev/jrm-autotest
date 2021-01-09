@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+@Entity
+@Table(name = "task_step")
+
 @Data
 @Builder
 @NoArgsConstructor

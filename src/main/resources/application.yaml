@@ -8,14 +8,16 @@ logging:
 
 spring:
   datasource:
-    driver-class-name: org.postgresql.Driver
+#    driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://92.53.65.165:5432/javaroadmap
     username: postgres
     password: changeme
   jpa:
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
-    show-sql: false
+    show-sql: true
+    hibernate:
+      ddl-auto: validate
 
 javaroadmap:
   api:

@@ -12,7 +12,7 @@ repositories {
     mavenCentral()
 }
 
-ext{
+ext {
     lombokVersion = "1.18.8"
     junitVersion = "5.4.1"
     shazamcrestVersion = "0.11"
@@ -21,6 +21,7 @@ ext{
     postgresqlVersion = "42.2.3"
     springVersion = "2.0.5.RELEASE"
     restAssured = "3.0.0"
+    hibernateJpaMetamodelVersion = "5.4.22.Final"
 }
 
 dependencies {
@@ -41,7 +42,7 @@ dependencies {
 
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
     implementation "org.springframework.boot:spring-boot-starter-web"
-    compile("org.springframework.boot:spring-boot-starter-security"){
+    compile("org.springframework.boot:spring-boot-starter-security") {
         exclude module: "logback-classic"
     }
 
@@ -54,7 +55,12 @@ dependencies {
 
     // Database support
     implementation "org.postgresql:postgresql:${postgresqlVersion}"
+    // hibernate jpa metamodel
+    annotationProcessor "org.hibernate:hibernate-jpamodelgen:$hibernateJpaMetamodelVersion"
+    compile 'org.javassist:javassist:3.25.0-GA'
 
+//zip
+//    compile 'net.lingala.zip4j:zip4j:2.6.1'
 
     implementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
     implementation "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"

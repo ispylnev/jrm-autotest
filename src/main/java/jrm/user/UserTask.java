@@ -1,6 +1,5 @@
 package jrm.user;
 
-
 import jrm.task.Task;
 import jrm.task.TaskStatus;
 import lombok.*;
@@ -12,16 +11,17 @@ import java.util.Set;
 import java.util.UUID;
 
 
+@Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString(exclude = {"user", "task", "steps"})
 @EqualsAndHashCode(exclude = {"user", "task", "steps"})
-
+@Table(name = "jrm_user_task")
 public class UserTask {
 
     @EmbeddedId
-    UserTaskId id;
+    private UserTaskId id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("userId")

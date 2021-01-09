@@ -39,7 +39,7 @@ public class UserSignUpTest implements CommonTest {
                 .then()
                 .log().all();
 
-        userRepository.fetchUserByUsername(user.getUsername());
+        User userAfterSelect = userRepository.fetchUserByUsername(user.getUsername());
     }
 }
 
