@@ -1,0 +1,428 @@
+openapi: "3.0.0"
+
+info:
+  version: 1.0.0
+  title: Open API endpoints description for the javaroadmap APIs v1
+
+servers:
+  - url: http://localhost:8081/api/v1
+  - url: http://javaroadmap:8081/api/v1
+
+paths:
+
+  # MODULES
+
+  /modules:
+    get:
+      summary: List of all modules
+      operationId: getModules
+      tags:
+        - modules
+      parameters:
+        - name: search
+          in: query
+          description: search filter, more details here https://github.com/jirutka/rsql-parser
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: results available
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Modules"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+
+  # TASKS
+  /tasks:
+    get:
+      summary: List of all tasks
+      operationId: getAllTasks
+      tags:
+        - tasks
+      parameters:
+        - name: search
+          in: query
+          description: search filter, more details here https://github.com/jirutka/rsql-parser
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: results available
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Tasks"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+
+
+  # NOTIFICATION
+  /notification:
+    get:
+      summary: List of all new notifications for users
+      operationId: getNotification
+      tags:
+        - notifications
+      responses:
+        '200':
+          description: results available
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Notification"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+  # TASKS STEPS
+  /task-steps:
+    get:
+      summary: List of all task steps
+      operationId: getAllTaskSteps
+      tags:
+        - task-steps
+      parameters:
+        - name: search
+          in: query
+          description: search filter, more details here https://github.com/jirutka/rsql-parser
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: results available
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TaskSteps"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+
+  # USERS
+
+  /users/me:
+    get:
+      summary: Information about current user
+      description: >
+        Start point for any clients. When user open the site this endpoint should be executed immediately.
+        This endpoint returns important data about the user, is he authorized already or not.
+        If user not exists yet in the system, system will create a new user and immediately returns information about the user.
+      operationId: fetchCurrentUser
+      tags:
+        - user
+      responses:
+        '200':
+          description: results available
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserDto"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+
+  # USER TASKS
+
+  /user-tasks:
+    get:
+      summary: List of all user tasks
+      operationId: getAllUserTasks
+      tags:
+        - user-tasks
+      parameters:
+        - name: search
+          in: query
+          description: search filter, more details here https://github.com/jirutka/rsql-parser
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: results available
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserTasks"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+
+
+  # USER TASKS STEPS
+
+  /user-task-steps:
+    get:
+      summary: List of all user task steps
+      operationId: getAllUserTaskSteps
+      tags:
+        - user-task-steps
+      parameters:
+        - name: search
+          in: query
+          description: search filter, more details here https://github.com/jirutka/rsql-parser
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: results available
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserTaskSteps"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+
+  # REVIEWS
+
+  /reviews:
+    get:
+      summary: List of latest reviews
+      operationId: getReviews
+      tags:
+        - review
+      responses:
+        '200':
+          description: results available
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Reviews"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+
+components:
+  schemas:
+
+    # MODULES
+
+    Modules:
+      type: array
+      items:
+        $ref: "#/components/schemas/ModuleDto"
+    ModuleDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        code:
+          type: string
+        name:
+          type: string
+        title:
+          type: string
+        category:
+          type: string
+        description:
+          type: string
+        available:
+          type: boolean
+
+    # TASKS
+    Tasks:
+      type: array
+      items:
+        $ref: "#/components/schemas/TaskDto"
+    TaskDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        title:
+          type: string
+        article:
+          type: string
+        description:
+          type: string
+        note:
+          type: string
+        parentTasks:
+          type: array
+          items:
+            type: integer
+            format: int64
+
+    # TASK STEPS
+    TaskSteps:
+      type: array
+      items:
+        $ref: "#/components/schemas/TaskStepDto"
+    TaskStepDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        priority:
+          type: integer
+          format: int32
+        title:
+          type: string
+        description:
+          type: string
+        recommendation:
+          type: string
+
+    # USERS
+
+    UserDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        username:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+        provider:
+          type: string
+        providerId:
+          type: string
+        sessionId:
+          type: string
+        createdOn:
+          type: string
+          format: date
+        status:
+          type: string
+          enum:
+            - REGISTERED
+            - UNREGISTERED
+          description: >
+            * `REGISTERED` - User has been registered using system registration process or through github(oauth2).
+            * `UNREGISTERED` - User without registration.
+
+    # USER TASKS
+
+    UserTasks:
+      type: array
+      items:
+        $ref: "#/components/schemas/UserTaskDto"
+    UserTaskDto:
+      type: object
+      properties:
+        taskId:
+          type: integer
+          format: int64
+        generatedTaskId:
+          type: string
+        status:
+          type: string
+          enum:
+            - READY
+            - IN_PROGRESS
+            - COMPLETED
+            - FAILED
+            - BLOCKED
+          description: >
+            * `READY` - Task is ready to be tested by system.
+            * `IN_PROGRESS` - The testing process is running and the task will be tested soon,
+            this status used to exclude the timepoint when the system runs more then one test process
+            * `COMPLETED` - Completed means that the task successfully completed by user.
+            * `FAILED` - Task will be failed with some reasons.
+            * `BLOCKED` - Blocked means that the task is not available for the user.
+            For example: user makes more tries when possible or this task in the module,
+            which isn't paid by user.
+        rating:
+          type: integer
+          format: int32
+
+    # USER TASK STEPS
+
+    UserTaskSteps:
+      type: array
+      items:
+        $ref: "#/components/schemas/UserTaskStepDto"
+    UserTaskStepDto:
+      type: object
+      properties:
+        stepId:
+          type: integer
+          format: int64
+        status:
+          type: string
+          enum:
+            - COMPLETED
+            - FAILED
+
+    # REVIEWS
+    Reviews:
+      type: array
+      items:
+        $ref: "#/components/schemas/ReviewDto"
+    ReviewDto:
+      type: object
+      properties:
+        name:
+          type: string
+        review:
+          type: string
+        profileImage:
+          type: string
+
+    ErrorDto:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+
+
+    # NOTIFICATION
+    Notification:
+      type: array
+      items:
+        $ref: "#/components/schemas/NotificationDto"
+    NotificationDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        createdOn:
+          type: string
+          format: date-time
+        title:
+          type: string
