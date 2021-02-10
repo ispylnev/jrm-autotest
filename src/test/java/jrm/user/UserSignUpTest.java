@@ -1,7 +1,6 @@
 package jrm.user;
 
 
-import groovy.transform.builder.Builder;
 import io.restassured.http.ContentType;
 import io.restassured.response.ValidatableResponse;
 import jrm.commonclasses.CommonTest;
@@ -43,14 +42,13 @@ public class UserSignUpTest implements CommonTest {
 
         assertEquals(201, response.extract().statusCode(), "ответ не 201");
         User userAfterSelect = userRepository.fetchUserByUsername(user.getUsername());
-        assertNotNull(userAfterSelect,"пользователя нет в БД");
+        assertNotNull(userAfterSelect, "пользователя нет в БД");
     }
 
 
     @Test
     @Description("check sign up for already existing user, the same user can't go through registration twice")
-    void SingUpForAlreadyExistingUser()
-    {
+    void SingUpForAlreadyExistingUser() {
         UserDto user = UserDto.builder()
                 .email("test123@mail.ru")
                 .password("test123")
@@ -64,14 +62,13 @@ public class UserSignUpTest implements CommonTest {
                 .then()
                 .log().all();
 
-        assertEquals(409, response.extract().statusCode(), "conflict has not found, NEW user has been created" );
+        assertEquals(409, response.extract().statusCode(), "conflict has not found, NEW user has been created");
         assertTrue(userRepository.existsByUsername(user.getUsername()), "checking user does not exist");
     }
 
     @Test
     @Description("signing up with null fields")
-    void registrationWithNullFields()
-    {
+    void registrationWithNullFields() {
         UserDto user = UserDto.builder()
                 .name(null)
                 .email(null)
@@ -86,7 +83,7 @@ public class UserSignUpTest implements CommonTest {
                 .then()
                 .log().all();
 
-        assertEquals(409, response.extract().statusCode(), "status cod is not 409 conflict");
+        assertEquals(409, response.extract().statusCode(), "status code is not 409 conflict");
 
     }
 

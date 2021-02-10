@@ -11,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Description;
 
-import java.util.Optional;
-
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -22,9 +20,6 @@ public class UserSignInTest implements CommonTest {
     @Autowired
     UserAuthApiService userAuthApiService;
 
-    // mine, should be deleted before commit
-    @Autowired
-    private UserRepository userRepository;
 
     @Test
     @Description("200 ок Базовый сценарий авторизации")
@@ -41,14 +36,13 @@ public class UserSignInTest implements CommonTest {
                 .then()
                 .log().all();
 
-       assertEquals(200 , response.extract().statusCode(), "ответ не 200");
+        assertEquals(200, response.extract().statusCode(), "ответ не 200");
 
     }
 
     @Test
     @Description("signing in with null fields")
-    void authorizationWithNullFields()
-    {
+    void authorizationWithNullFields() {
         UserDto user = UserDto.builder()
                 .username(null)
                 .password(null)
