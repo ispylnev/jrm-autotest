@@ -3,6 +3,7 @@ package jrm.user;
 import io.restassured.http.ContentType;
 import io.restassured.response.ValidatableResponse;
 import jrm.commonclasses.CommonTest;
+import jrm.dao.UserRepository;
 import jrm.dto.UserDto;
 import jrm.service.UserAuthApiService;
 import org.junit.jupiter.api.Test;
@@ -19,12 +20,13 @@ public class UserSignInTest implements CommonTest {
     @Autowired
     UserAuthApiService userAuthApiService;
 
+
     @Test
     @Description("200 ок Базовый сценарий авторизации")
-    void successfulRegistrationTest() {
+    void successfulAuthorizationTest() {
         UserDto user = UserDto.builder()
-                .password("test123")
-                .username("test123")
+                .password("lalala")
+                .username("lalala")
                 .build();
 
         ValidatableResponse response = given().contentType(ContentType.JSON)
@@ -34,6 +36,27 @@ public class UserSignInTest implements CommonTest {
                 .then()
                 .log().all();
 
-        assertEquals(response.extract().statusCode(), 200, "ответ не 200");
+        assertEquals(200, response.extract().statusCode(), "ответ не 200");
+
+    }
+
+    @Test
+    @Description("signing in with null fields")
+    void authorizationWithNullFields() {
+        UserDto user = UserDto.builder()
+                .username(null)
+                .password(null)
+                .build();
+
+        ValidatableResponse response = given().contentType(ContentType.JSON)
+                .body(user)
+                .when()
+                .post(userAuthApiService.getSignIn())
+                .then()
+                .log().all();
+
+        assertEquals(401, response.extract().statusCode(), "status code is not 401");
+
+
     }
 }

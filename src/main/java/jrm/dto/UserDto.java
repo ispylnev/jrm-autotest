@@ -20,5 +20,9 @@ public class UserDto {
 
     String password;
 
+
+
+
+
 }
 
