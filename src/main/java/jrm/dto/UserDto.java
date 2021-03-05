@@ -32,16 +32,5 @@ public class UserDto {
     private String createdOn;
     private String status;
 
-
-
-
-
-
-
-
-
-
-
-
 }
 

@@ -37,6 +37,7 @@ public class User {
     @Column(name = "created_on")
     private Date createdOn = new Date();
 
+
     @OneToMany(
             mappedBy = "user",
             cascade = CascadeType.ALL,

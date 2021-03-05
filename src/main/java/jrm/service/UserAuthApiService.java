@@ -26,7 +26,7 @@ public class UserAuthApiService {
     private String deleteGuestUsers;
 
     @Value("${javaroadmap.api.base-v1-url}modules")
-    private String mainPage;
+    private String modulesPage;
 
     @Value("${javaroadmap.api.base-v1-url}users/me")
     private String infoAboutCurrentUser;
