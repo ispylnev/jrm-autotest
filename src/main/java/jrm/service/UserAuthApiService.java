@@ -25,6 +25,12 @@ public class UserAuthApiService {
     @Value("${javaroadmap.api.base-v1-url}schedulers/delete-guests-users")
     private String deleteGuestUsers;
 
+    @Value("${javaroadmap.api.base-v1-url}modules")
+    private String modulesPage;
+
+    @Value("${javaroadmap.api.base-v1-url}users/me")
+    private String infoAboutCurrentUser;
+
     public AuthTokenResponse auth(UserDto user){
        return given().contentType(ContentType.JSON)
                 .body(user)

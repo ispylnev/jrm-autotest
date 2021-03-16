@@ -27,10 +27,10 @@ public class UserSignUpTest implements CommonTest {
     @Description("201 ок Базовый сценарий регистрации.")
     void successfulRegistrationTest() {
         UserDto user = UserDto.builder()
-                .name("qwerty")
-                .email("qwerty@mail.ru")
-                .password("qwerty")
-                .username("qwerty")
+                .name("test123")
+                .email("test123")
+                .password("test123")
+                .username("test123")
                 .build();
 
         ValidatableResponse response = given().contentType(ContentType.JSON)
